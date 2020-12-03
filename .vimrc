@@ -53,6 +53,8 @@ filetype plugin indent on    " required
 " Map NerdTree Toggle to Ctrl + n
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHideen=1
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.pyc$', '\.swp', '\~$'] "ignore files in NERDTree
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -62,6 +64,8 @@ set foldmethod=indent
 set foldlevel=99
 " Enable folding with spacebar
 nnoremap <space> za
+" Don't unfold go code on write
+let g:go_fmt_experimental = 1
 " Enable json formatting with ctrl+j
  map <C-f> :%!python -m json.tool<CR>
 let NERDTreeIgnore=['\.pyc$', '\.swp', '\~$'] "ignore files in NERDTree
@@ -157,12 +161,25 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 " in ~/.vim/colors/ and uncomment:
 " colorscheme solarized
 " set up tab completion menus
+" vim go autoimport
+let g:go_fmt_command = "goimports"
 set wildmode=longest,list,full
 set wildmenu
 " set hybrid line numbers
+" **********************************************************
+"                GO DEBUGGING
+" **********************************************************
+nnoremap  <C-b> :GoDebugBreakpoint <CR>
+nnoremap  <C-y> :GoDebugStart <CR>
+nnoremap  <C-u> :GoDebugStop <CR>
+nnoremap  <C-p> :GoDebugNext <CR>
+nnoremap  <C-o> :GoDebugStep <CR>
+nnoremap  <C-i> :GoDebugStepOut <CR>
+nnoremap  <C-m> :GoDebugContinue <CR>
 set number relativenumber
 augroup numbertoggle
     autocmd!
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
+
